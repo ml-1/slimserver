@@ -2230,6 +2230,13 @@ sub playerStopped {
 		}
 	}
 
+	# If queue finished playing then reset song queue
+	my $currsong = Slim::Player::Source::playingSongIndex($client) + 1;
+	my $count = Slim::Player::Playlist::count($client);
+	if ($currsong == $count) {
+		$self->resetSongqueue(0);
+	}
+
 	_eventAction($self, 'Stopped');
 }
 
